@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarah & Alex - Our Wedding</title>
+    <style>
+        /* CSS STYLES */
+        :root {
+            --primary-color: #d4a373;
+            --secondary-color: #fefae0;
+            --text-color: #333333;
+            --bg-color: #faedcd;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            font-family: Georgia, serif;
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            margin-left: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links button:hover, .nav-links button.active {
+            color: var(--primary-color);
+        }
+
+        /* Page Management */
+        .page {
+            display: none;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .page.active-page {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Page 1: Home Styles */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background-color: var(--white);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--primary-color);
+            font-family: Georgia, serif;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Countdown Timer */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .time-box {
+            background-color: var(--secondary-color);
+            padding: 1rem;
+            border-radius: 8px;
+            min-width: 80px;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Details Grid */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Page 2: Details & RSVP Styles */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-item {
+            background-color: var(--white);
+            height: 180px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-style: italic;
+            border: 2px dashed #e0e0e0;
+        }
+
+        /* RSVP Form */
+        .rsvp-container {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .rsvp-container h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #bc8a5f;
+        }
+
+        #form-message {
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: bold;
+            color: green;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--white);
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <nav>
+        <div class="logo">S & A</div>
+        <div class="nav-links">
+            <button id="nav-page1" class="active" onclick="switchPage('page1')">Home</button>
+            <button id="nav-page2" onclick="switchPage('page2')">Details & RSVP</button>
+        </div>
+    </nav>
+
+    <!-- PAGE 1: Home -->
+    <div id="page1" class="page active-page">
+        <section class="hero">
+            <h1>Sarah & Alex</h1>
+            <p>We are getting married!</p>
+            <p><strong>Date:</strong> October 24, 2026</p>
+            
+            <div class="countdown">
+                <div class="time-box"><span id="days">00</span>Days</div>
+                <div class="time-box"><span id="hours">00</span>Hours</div>
+                <div class="time-box"><span id="minutes">00</span>Minutes</div>
+                <div class="time-box"><span id="seconds">00</span>Seconds</div>
+            </div>
+        </section>
+
+        <section class="details-grid">
+            <div class="card">
+                <h3>The Ceremony</h3>
+                <p><strong>Time:</strong> 4:00 PM</p>
+                <p><strong>Location:</strong> St. Grace Chapel</p>
+                <p>123 Blossom Lane, Cityville</p>
+            </div>
+            <div class="card">
+                <h3>The Reception</h3>
+                <p><strong>Time:</strong> 6:30 PM</p>
+                <p><strong>Location:</strong> The Grand Ballroom</p>
+                <p>456 Celebration Way, Cityville</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE 2: Details & RSVP -->
+    <div id="page2" class="page">
+        <h2 style="text-align: center; margin-bottom: 1.5rem; color: var(--primary-color);">Our Moments</h2>
+        <div class="gallery">
+            <div class="gallery-item">Photo Placeholders</div>
+            <div class="gallery-item">Photo Placeholders</div>
+            <div class="gallery-item">Photo Placeholders</div>
+        </div>
+
+        <section class="rsvp-container">
+            <h2>RSVP</h2>
+            <form id="rsvpForm" onsubmit="handleRSVP(event)">
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="attendance">Will you attend?</label>
+                    <select id="attendance" required>
+                        <option value="">Select an option</option>
+                        <option value="yes">Joyfully Accepts</option>
+                        <option value="no">Regretfully Declines</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="guests">Number of Guests</label>
+                    <input type="number" id="guests" min="1" max="5" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message for the Couple</label>
+                    <textarea id="message" rows="4" placeholder="Warm wishes..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send RSVP</button>
+            </form>
+            <div id="form-message"></div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Sarah & Alex's Wedding Website | See you there!</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Page Navigation Logic
+        function switchPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+            // Deactivate all nav buttons
+            document.querySelectorAll('.nav-links button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected page
+            document.getElementById(pageId).classList.add('active-page');
+            // Highlight active nav button
+            document.getElementById('nav-' + pageId).classList.add('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // RSVP Form Handling
+        function handleRSVP(event) {
+            event.preventDefault();
+            const name = document.getElementById('fullname').value;
+            const messageDiv = document.getElementById('form-message');
+            
+            messageDiv.textContent = `Thank you, ${name}! Your RSVP has been received.`;
+            document.getElementById('rsvpForm').reset();
+        }
+
+        // Countdown Timer Logic
+        const weddingDate = new Date("October 24, 2026 16:00:00").getTime();
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            if (distance < 0) {
+                document.querySelector('.countdown').innerHTML = "<h3>The Wedding Day is Here!</h3>";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            Here is a complete, custom 2-page wedding website built with HTML, CSS, and JavaScript. It uses a clean, romantic design and includes dynamic navigation so both pages exist within a single file for quick setup.
+
+Save the code below as `index.html` and open it in any web browser.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Wedding Celebration</title>
+    <style>
+        /* Color Palette & Basic Reset */
+        :root {
+            --primary: #8a6d3b;
+            --background: #fdfbf7;
+            --accent: #d4af37;
+            --text: #333333;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* Navigation Header */
+        header {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav a {
+            color: var(--primary);
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+        }
+
+        /* Page Layout */
+        .page {
+            display: none;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography & Components */
+        h1 {
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .date {
+            font-size: 1.3rem;
+            color: var(--accent);
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            border: 1px solid #f0e6d2;
+        }
+
+        /* RSVP Form Styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--accent);
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a onclick="showPage('home')" id="nav-home" class="active">Home</a>
+            <a onclick="showPage('rsvp')" id="nav-rsvp">RSVP & Details</a>
+        </nav>
+    </header>
+
+    <!-- PAGE 1: HOME -->
+    <div id="home" class="page active">
+        <div class="card">
+            <h1>Alex & Sam</h1>
+            <p class="date">Are Getting Married!</p>
+            <p>We are thrilled to invite you to celebrate our special day with us. Join us as we begin this new chapter of our lives together.</p>
+        </div>
+
+        <div class="card">
+            <h2>Our Story</h2>
+            <p>From our first coffee date to a romantic proposal under the stars, our journey together has been filled with joy, laughter, and endless adventures. We can’t wait to create more memories with all of you.</p>
+        </div>
+    </div>
+
+    <!-- PAGE 2: RSVP & DETAILS -->
+    <div id="rsvp" class="page">
+        <div class="card">
+            <h2>Event Details</h2>
+            <p><strong>Date:</strong> Saturday, June 18, 2027</p>
+            <p><strong>Ceremony:</strong> 4:00 PM at St. Grace Church</p>
+            <p><strong>Reception:</strong> 6:00 PM at The Grand Botanical Gardens</p>
+        </div>
+
+        <div class="card">
+            <h2>RSVP</h2>
+            <form id="rsvpForm" onsubmit="handleFormSubmit(event)">
+                <div>
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" required placeholder="Enter your full name">
+                </div>
+                <div>
+                    <label for="attendance">Will you attend?</label>
+                    <select id="attendance" required>
+                        <option value="yes">Joyfully Accept</option>
+                        <option value="no">Regretfully Decline</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="guests">Number of Guests</label>
+                    <input type="number" id="guests" min="1" max="5" value="1">
+                </div>
+                <div>
+                    <label for="message">Message for the Couple</label>
+                    <textarea id="message" rows="4" placeholder="Leave us a warm note..."></textarea>
+                </div>
+                <button type="submit">Submit RSVP</button>
+            </form>
+            <div id="confirmation" style="display: none; margin-top: 1rem; color: var(--primary); font-weight: bold;">
+                Thank you! Your response has been received.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Created with love for our friends and family.</p>
+    </footer>
+
+    <script>
+        // Tab Navigation Functionality
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Remove active class from links
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            document.getElementById('nav-' + pageId).classList.add('active');
+
+            // Scroll back to top
+            window.scrollTo(0, 0);
+        }
+
+        // Form Submission Handling
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            document.getElementById('rsvpForm').style.display = 'none';
+            document.getElementById('confirmation').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
